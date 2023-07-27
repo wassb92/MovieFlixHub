@@ -77,7 +77,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-full bg-popular">
         <SearchBar setMovies={setMovies} fetchMovies={fetchMovies} />
         {movies.length > 0 ? (
           <div className="mx-4">
