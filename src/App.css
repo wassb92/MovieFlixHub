@@ -9,21 +9,3 @@ body {
   outline: none;
   background-image: url("image.jpg");
 }
-
-.container {
-  width: 100%;
-  margin: 1em auto;
-  background-color: darkslategray;
-}
-
-.grid {
-  display: grid;
-  margin-left: 0.5px;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 0.2em;
-  justify-content: center;
-}
-
-h2 {
-  background-color: antiquewhite;
-}
