@@ -40,7 +40,7 @@ const Login = () => {
         config
       );
       localStorage.setItem("authToken", data.token);
-      navigate("/");
+      navigate("/hello");
     } catch (error) {
       setError(error?.response?.data?.error);
       setTimeout(() => {

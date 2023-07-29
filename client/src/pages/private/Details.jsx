@@ -32,7 +32,7 @@ const Details = ({
   const [video, setVideo] = useState();
 
   const fetchVideo = async () => {
-    const url = `${global.API_ENDPOINT}/movie/${id}/videos?api_key=${global.API_KEY}&include_video_language=fr`;
+    const url = `${global.TMDB_API}/movie/${id}/videos?api_key=${global.API_KEY}&include_video_language=fr`;
 
     try {
       const res = await axios.get(url);

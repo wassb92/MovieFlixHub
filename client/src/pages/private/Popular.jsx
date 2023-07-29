@@ -3,7 +3,8 @@ import axios from "axios";
 import Details from "./Details";
 
 global.API_KEY = "55bb5aeea2538b26cf848582959d4fc8";
-global.API_ENDPOINT = "https://api.themoviedb.org/3";
+global.TMDB_API = "https://api.themoviedb.org/3";
+global.API_ENDPOINT = "http://localhost:8080";
 
 const SearchBar = ({ setMovies, fetchMovies }) => {
   const [query, setQuery] = useState("");
@@ -13,7 +14,7 @@ const SearchBar = ({ setMovies, fetchMovies }) => {
     if (instantQuery.length < 1) return fetchMovies();
 
     try {
-      const url = `${global.API_ENDPOINT}/search/movie?api_key=${global.API_KEY}&query=${instantQuery}&language=fr`;
+      const url = `${global.TMDB_API}/search/movie?api_key=${global.API_KEY}&query=${instantQuery}&language=fr`;
       const res = await axios.get(url);
       const data = await res.data;
 
@@ -58,7 +59,7 @@ const Popular = () => {
   const [movies, setMovies] = useState([]);
 
   const fetchMovies = async () => {
-    const url = `${global.API_ENDPOINT}/discover/movie?api_key=${global.API_KEY}&language=fr`;
+    const url = `${global.TMDB_API}/discover/movie?api_key=${global.API_KEY}&language=fr`;
 
     try {
       const res = await axios.get(url);

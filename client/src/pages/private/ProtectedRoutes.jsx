@@ -29,7 +29,7 @@ const useAuth = () => {
         loadingGetUser.current = false;
 
         const { data } = await axios.get(
-          `${global.API_ENDPOINT}/api/private/account`,
+          `${global.API}/api/private/account`,
           config
         );
         setUser(data.user);
