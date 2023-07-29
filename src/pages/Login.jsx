@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Input } from "../components/Input";
+import { Button } from "../components/Button";
 import axios from "axios";
-import { Input } from "components/Input";
-import { DisplayError } from "components/DisplayNotice";
-import { Button } from "components/Button";
+import { DisplayError } from "../components/DisplayNotice";
+import { Link, useNavigate } from "react-router-dom";
+import HomeIcon from "@mui/icons-material/Home";
 
 const NeedRegister = () => {
   return (
@@ -13,6 +14,16 @@ const NeedRegister = () => {
         S'enregistrer
       </Link>
     </span>
+  );
+};
+
+const ForgetPassword = () => {
+  return (
+    <div>
+      <Link to="/forgotpassword" className="underline underline-offset-1">
+        Mot de passe oublié ?
+      </Link>
+    </div>
   );
 };
 
@@ -42,7 +53,7 @@ const Login = () => {
       localStorage.setItem("authToken", data.token);
       navigate("/");
     } catch (error) {
-      setError(error?.response?.data?.error);
+      setError(error?.response?.data?.error || error?.message);
       setTimeout(() => {
         setError("");
       }, 3 * 1000);
@@ -52,9 +63,16 @@ const Login = () => {
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-
   return (
-    <div className="from-main to-secondary">
+    <div className="w-screen h-screen bg-gradient-to-br from-main to-secondary">
+      <div className="flex justify-center ">
+        <Button
+          className="px-10 py-2 bg-soft text-white rounded-md hover:bg-main hover:drop-shadow-md duration-200 ease-in border my-6"
+          children={<HomeIcon className="w-6 h-6" />}
+          onClick={() => navigate("/")}
+        />
+      </div>
+
       <div className="flex justify-center items-center">
         <div className="px-10 pt-10 bg-white rounded-xl drop-shadow-lg space-y-5">
           <h1 className="text-center text-3xl">Se connecter</h1>
@@ -82,6 +100,7 @@ const Login = () => {
               required={true}
             />
           </div>
+          <ForgetPassword />
           {error && <DisplayError message={error} />}
           <div className="flex justify-center mt-4">
             <Button type="submit" children="Connexion" onClick={loginHandler} />
@@ -93,22 +112,4 @@ const Login = () => {
   );
 };
 
-const Home = () => {
-  return (
-    <div
-      className="bg-cover bg-no-repeat bg-center h-screen"
-      style={{ backgroundImage: "url('https://rb.gy/p2hphi')" }}
-    >
-      {/* <img
-        src="https://rb.gy/ulxxee"
-        alt="Netflix Logo"
-        className="w-24 h-auto"
-      /> */}
-      <div className="flex justify-center items-center h-full">
-        <Login />
-      </div>
-    </div>
-  );
-};
-
-export default Home;
+export default Login;
