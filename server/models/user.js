@@ -11,7 +11,7 @@ const UserSchema = mongoose.Schema(
     alreadySeen: [MovieSchema],
     playlists: [
       {
-        name: { type: String, required: false, unique: true },
+        name: { type: String, required: false },
         movies: [MovieSchema],
       },
     ],

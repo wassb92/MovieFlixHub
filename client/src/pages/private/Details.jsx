@@ -1,7 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { ThumbUpAlt, LiveTv, Done } from "@mui/icons-material";
+import {
+  ThumbUpAlt,
+  LiveTv,
+  Done,
+  ControlPoint,
+  AddBox,
+} from "@mui/icons-material";
 import { UserContext } from "UserContext";
+import { Button } from "components/Button";
+import { AutoComplete } from "components/Input";
 
 const API_IMG = "https://image.tmdb.org/t/p/w500/";
 
@@ -21,6 +29,79 @@ const Video = ({ videos }) => {
   );
 };
 
+const AddMovieInPlaylistModal = ({
+  movieId,
+  title,
+  poster_path,
+  setShowAddPlaylist,
+}) => {
+  const { user } = useContext(UserContext);
+  const { playlists } = user;
+  const [playlistSelected, setPlaylistSelected] = useState(
+    (playlists && playlists[0].name) || ""
+  );
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!playlistSelected) return;
+
+    setShowAddPlaylist(false);
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    };
+
+    const body = {
+      playlistName: playlistSelected,
+      movieId: movieId,
+      title: title,
+      poster_path: poster_path,
+    };
+
+    try {
+      const { data } = await axios.put(
+        `${global.API_ENDPOINT}/api/private/playlists/add-movie`,
+        body,
+        config
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 text-center">
+      <div className="bg-gray-100 rounded w-1/3 p-4 space-y-4">
+        <div>
+          <h2 className="text-4xl my-4">Ajouter à une playlist</h2>
+        </div>
+        <div className="flex items-center justify-center space-y-2">
+          <AutoComplete
+            options={playlists.map((playlist) => playlist.name)}
+            value={playlistSelected}
+            setValue={setPlaylistSelected}
+          />
+          <AddBox
+            onClick={handleSubmit}
+            color="success"
+            className="cursor-pointer"
+            style={{ fontSize: "3.5rem", marginBottom: "0.7rem" }}
+          />
+        </div>
+
+        <div>
+          <Button onClick={() => setShowAddPlaylist(false)}>Fermer</Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const MovieModal = ({
   title,
   genres,
@@ -31,13 +112,22 @@ const MovieModal = ({
   overview,
   video,
   setShow,
+  id,
 }) => {
   const handleClose = () => setShow(false);
+  const [showAddPlaylist, setShowAddPlaylist] = useState(false);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 text-center">
-      <div className="modal-container bg-gray-100 rounded w-1/3 p-4">
-        <div className="modal-header">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 text-center z-100">
+      <div className="bg-gray-100 rounded w-1/3 p-4">
+        <div className="flex justify-end">
+          <ControlPoint
+            onClick={() => setShowAddPlaylist(!showAddPlaylist)}
+            fontSize="large"
+            className="cursor-pointer"
+          />
+        </div>
+        <div>
           <h2 className="text-4xl my-4">{title}</h2>
           <div className="flex flex-row justify-center">
             {genres &&
@@ -48,7 +138,16 @@ const MovieModal = ({
               ))}
           </div>
         </div>
-        <div className="modal-body">
+        {showAddPlaylist && (
+          <AddMovieInPlaylistModal
+            movieId={id}
+            title={title}
+            poster_path={poster_path}
+            setShowAddPlaylist={setShowAddPlaylist}
+          />
+        )}
+
+        <div>
           <img
             className="mx-auto rounded-lg"
             style={{ width: "14rem" }}
@@ -69,7 +168,7 @@ const MovieModal = ({
           <h2 className="text-2xl my-4">Résumé</h2>
           <p>{overview}</p>
         </div>
-        <div className="modal-footer">
+        <div>
           <button
             className="bg-gray-800 text-white py-2 px-4 rounded"
             onClick={handleClose}
@@ -190,7 +289,6 @@ const Details = ({
           { movieId: id, title, poster_path },
           config
         );
-        console.log("data", data);
       } catch (error) {
         console.log(error);
       }
@@ -198,7 +296,7 @@ const Details = ({
 
     return (
       <div
-        className="cursor-pointer"
+        className="cursor-pointer z-1"
         onClick={handleAlreadySeen}
         style={{
           position: "relative",
@@ -227,16 +325,15 @@ const Details = ({
     <>
       <div className="my-3">
         <img className="mx-auto rounded-lg" src={API_IMG + poster_path} />
-        <div class="flex justify-around items-center">
+        <div className="flex justify-around items-center">
           <div>
             <Like id={id} title={title} poster_path={poster_path} />
           </div>
           <div>
             <ShowMore />
           </div>
-          <div class="flex justify-around items-center gap-x-4">
+          <div className="flex justify-around items-center gap-x-4">
             <AlreadySeen id={id} title={title} poster_path={poster_path} />
-            <div>04</div>
           </div>
         </div>
       </div>
@@ -253,6 +350,7 @@ const Details = ({
             overview,
             video,
             setShow,
+            id,
           }}
         />
       )}

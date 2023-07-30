@@ -237,13 +237,8 @@ exports.addMovieToPlaylist = async (req, res, next) => {
     ].movies.findIndex((movie) => movie.movieId === movieId);
 
     if (existingMovieIndex !== -1) {
-      foundUser.playlists[existingPlaylistIndex].movies.splice(
-        existingMovieIndex,
-        1
-      );
-      await foundUser.save();
-      return res.status(200).json({
-        message: "ID de film supprimé avec succès de la playlist",
+      return res.status(400).json({
+        message: "Ce film est déjà dans la playlist",
       });
     }
 
