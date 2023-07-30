@@ -23,7 +23,7 @@ exports.register = async function (req, res) {
       password: password,
       favoriteGenreId: decodedToken.favoriteGenreId,
     });
-    res.status(200).json({ success: true, data: "Succès de l'inscription" });
+    return this.login(req, res);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Server: échec de l'enregistrement" });

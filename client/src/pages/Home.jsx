@@ -41,6 +41,7 @@ const Login = () => {
         user,
         config
       );
+
       localStorage.setItem("authToken", data.token);
       navigate("/account/movies", { state: { loggedIn: true } });
     } catch (error) {
