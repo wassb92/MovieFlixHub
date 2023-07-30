@@ -5,7 +5,7 @@ const UserSchema = mongoose.Schema(
   {
     email: { type: String, required: true, unique: true },
     password: { type: String, required: false },
-    favoriteGenre: { type: String, required: true },
+    favoriteGenreId: { type: Number, required: false },
   },
   {
     timestamps: true,

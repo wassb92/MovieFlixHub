@@ -4,19 +4,19 @@ import axios from "axios";
 import { AutoComplete, Input } from "components/Input";
 import { DisplayError } from "components/DisplayNotice";
 import { Button } from "components/Button";
-// import checkbox from mui
 import { Checkbox, FormGroup, FormControlLabel } from "@mui/material";
 
 const Login = () => {
   const [user, setUser] = useState({
     email: "",
     password: "",
-    favoriteGenre: "",
+    favoriteGenreId: 0,
     rememberMe: false,
   });
   const [error, setError] = useState("");
   const [isFirstLogin, setIsFirstLogin] = useState(false);
   const [options, setOptions] = useState([]);
+  const [favoriteGenre, setFavoriteGenre] = useState("");
 
   const navigate = useNavigate();
 
@@ -30,13 +30,19 @@ const Login = () => {
     };
 
     try {
+      if (isFirstLogin) {
+        const favoriteGenreId = options.find(
+          (option) => option.name === favoriteGenre
+        ).id;
+        user.favoriteGenreId = favoriteGenreId;
+      }
       const { data } = await axios.post(
         `${global.API_ENDPOINT}/api/auth/login`,
         user,
         config
       );
       localStorage.setItem("authToken", data.token);
-      navigate("/account");
+      navigate("/account/movies", { state: { loggedIn: true } });
     } catch (error) {
       const isFirstAuth = error?.response?.data?.firstAuth;
       setError(!isFirstAuth && error?.response?.data?.error);
@@ -48,7 +54,7 @@ const Login = () => {
             config
           );
           setOptions(data.genres);
-          setUser({ ...user, favoriteGenre: data.genres[0].name });
+          setFavoriteGenre(data.genres[0].name);
         } catch (error) {
           console.log(error);
         }
@@ -127,10 +133,8 @@ const Login = () => {
               {options && options.length > 0 && (
                 <AutoComplete
                   options={options.map((option) => option.name)}
-                  value={user.favoriteGenre}
-                  setValue={(value) =>
-                    setUser({ ...user, favoriteGenre: value })
-                  }
+                  value={favoriteGenre}
+                  setValue={setFavoriteGenre}
                 />
               )}
             </div>

@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Details from "./Details";
+import { useLocation } from "react-router-dom";
+import { UserContext } from "UserContext";
 
 global.API_KEY = "55bb5aeea2538b26cf848582959d4fc8";
 global.TMDB_API = "https://api.themoviedb.org/3";
@@ -18,7 +20,6 @@ const SearchBar = ({ setMovies, fetchMovies }) => {
       const res = await axios.get(url);
       const data = await res.data;
 
-      console.log(data);
       setMovies(data.results);
     } catch (e) {
       console.log(e);
@@ -56,14 +57,25 @@ const SearchBar = ({ setMovies, fetchMovies }) => {
 };
 
 const Popular = () => {
+  const { user } = useContext(UserContext);
+  const location = useLocation();
   const [movies, setMovies] = useState([]);
+  let loggedIn = location?.state?.loggedIn;
+  location.state = {};
 
   const fetchMovies = async () => {
-    const url = `${global.TMDB_API}/discover/movie?api_key=${global.API_KEY}&language=fr`;
+    let url = `${global.TMDB_API}/discover/movie?api_key=${global.API_KEY}&language=fr`;
+
+    if (loggedIn) {
+      const { favoriteGenreId } = user;
+      url = `${global.TMDB_API}/discover/movie?api_key=${global.API_KEY}&with_genres=${favoriteGenreId}&language=fr`;
+    }
 
     try {
       const res = await axios.get(url);
       const data = await res.data;
+
+      console.log("data :>> ", data);
       setMovies(data.results);
     } catch (e) {
       console.log(e);

@@ -5,10 +5,10 @@ const ErrorResponse = require("../utils/errorResponse");
 require("dotenv").config({ path: "./.env" });
 
 exports.register = async function (req, res) {
-  const { email, password, favoriteGenre } = req.body;
+  const { email, password, favoriteGenreId } = req.body;
 
   const confirmToken = jwt.sign(
-    { email: email, password: password, favoriteGenre: favoriteGenre },
+    { email: email, password: password, favoriteGenreId: favoriteGenreId },
     process.env.JWT_SECRET,
     {
       expiresIn: process.env.JWT_EXPIRE,
@@ -21,7 +21,7 @@ exports.register = async function (req, res) {
     await User.create({
       email: decodedToken.email,
       password: password,
-      favoriteGenre: decodedToken.favoriteGenre,
+      favoriteGenreId: decodedToken.favoriteGenreId,
     });
     res.status(200).json({ success: true, data: "Succès de l'inscription" });
   } catch (err) {
@@ -31,7 +31,7 @@ exports.register = async function (req, res) {
 };
 
 exports.login = async (req, res, next) => {
-  const { email, password, favoriteGenre, rememberMe } = req.body;
+  const { email, password, favoriteGenreId, rememberMe } = req.body;
 
   if (!email || !password) {
     return res.status(400).json({ error: "Veuillez remplir tous les champs" });
@@ -40,7 +40,7 @@ exports.login = async (req, res, next) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      if (!favoriteGenre) {
+      if (!favoriteGenreId) {
         return res.status(400).json({
           error: "Veuillez choisir un genre de film favori",
           firstAuth: true,
