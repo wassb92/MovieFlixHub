@@ -43,7 +43,7 @@ const CreatePlaylist = () => {
           config
         );
         setName("");
-        console.log(data);
+        window.location.reload();
       } catch (error) {
         console.log(error);
       }
@@ -57,7 +57,7 @@ const CreatePlaylist = () => {
         config
       );
       setName("");
-      console.log(data);
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }

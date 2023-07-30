@@ -259,3 +259,61 @@ exports.addMovieToPlaylist = async (req, res, next) => {
     });
   }
 };
+
+exports.deleteMovieFromPlaylist = async (req, res, next) => {
+  const { playlistName, movieId } = req.body;
+
+  const authToken = getAuthToken(req);
+
+  try {
+    if (!authToken) {
+      return res.status(401).json({
+        message:
+          "Accès non autorisé. Veuillez fournir un jeton d'authentification.",
+      });
+    }
+
+    const decoded = jwt.verify(authToken, process.env.JWT_SECRET);
+    const foundUser = await User.findById(decoded.userId);
+
+    if (!foundUser) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    const existingPlaylistIndex = foundUser.playlists.findIndex(
+      (playlist) => playlist.name === playlistName
+    );
+
+    if (existingPlaylistIndex === -1) {
+      return res.status(400).json({
+        message: "Une playlist avec ce nom n'existe pas",
+      });
+    }
+
+    const existingMovieIndex = foundUser.playlists[
+      existingPlaylistIndex
+    ].movies.findIndex((movie) => movie.movieId === movieId);
+
+    if (existingMovieIndex === -1) {
+      return res.status(400).json({
+        message: "Ce film n'est pas dans la playlist",
+      });
+    }
+
+    foundUser.playlists[existingPlaylistIndex].movies.splice(
+      existingMovieIndex,
+      1
+    );
+    await foundUser.save();
+
+    return res.status(200).json({
+      message: "ID de film supprimé avec succès de la playlist",
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      message:
+        "Une erreur est survenue lors de la suppression du film de la playlist",
+    });
+  }
+};
