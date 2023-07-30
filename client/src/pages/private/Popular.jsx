@@ -60,6 +60,7 @@ const Popular = () => {
   const { user } = useContext(UserContext);
   const location = useLocation();
   const [movies, setMovies] = useState([]);
+  const [genres, setGenres] = useState([]);
   let loggedIn = location?.state?.loggedIn;
   location.state = {};
 
@@ -75,15 +76,39 @@ const Popular = () => {
       const res = await axios.get(url);
       const data = await res.data;
 
-      console.log("data :>> ", data);
       setMovies(data.results);
     } catch (e) {
       console.log(e);
     }
   };
 
+  const fetchGenres = async () => {
+    const url = `${global.TMDB_API}/genre/movie/list?api_key=${global.API_KEY}&language=fr`;
+
+    try {
+      const res = await axios.get(url);
+      const data = await res.data.genres;
+      setGenres(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const ConvertGenres = (genre_ids) => {
+    const genresName = [];
+    genre_ids.forEach((genre_id) => {
+      genres.forEach((genre) => {
+        if (genre.id === genre_id) {
+          genresName.push(genre.name);
+        }
+      });
+    });
+    return genresName;
+  };
+
   useEffect(() => {
     fetchMovies();
+    fetchGenres();
   }, []);
 
   if (!movies) return <h1>Loading...</h1>;
@@ -99,7 +124,14 @@ const Popular = () => {
                 (movieReq) =>
                   movieReq.id &&
                   movieReq.poster_path && (
-                    <Details key={movieReq.id} {...movieReq} />
+                    <>
+                      {console.log("movieReq :>> ", movieReq)}
+                      <Details
+                        key={movieReq.id}
+                        {...movieReq}
+                        genres={ConvertGenres(movieReq.genre_ids)}
+                      />
+                    </>
                   )
               )}
             </div>

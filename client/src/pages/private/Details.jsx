@@ -14,7 +14,7 @@ const Video = ({ videos }) => {
         src={`https://www.youtube.com/embed/${videos[index].key}`}
         title="YouTube video player"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      ></iframe>
+      />
     </div>
   );
 };
@@ -27,6 +27,7 @@ const Details = ({
   release_date,
   overview,
   id,
+  genres,
 }) => {
   const [show, setShow] = useState(false);
   const [video, setVideo] = useState();
@@ -62,13 +63,21 @@ const Details = ({
           className="bg-white text-gray-900 py-2 px-4 rounded"
           onClick={handleShow}
         >
-          View More
+          Voir plus
         </button>
         {show && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="modal-container bg-gray-100 rounded w-1/3 p-4">
               <div className="modal-header">
                 <h2 className="text-4xl my-4">{title}</h2>
+                <div className="flex flex-row justify-center">
+                  {genres &&
+                    genres.map((genre) => (
+                      <div className="bg-gray-800 text-white rounded-full px-3 mx-1 mb-4">
+                        {genre}
+                      </div>
+                    ))}
+                </div>
               </div>
               <div className="modal-body">
                 <img
@@ -96,7 +105,7 @@ const Details = ({
                   className="bg-gray-800 text-white py-2 px-4 rounded"
                   onClick={handleClose}
                 >
-                  Close
+                  Fermer
                 </button>
               </div>
             </div>
