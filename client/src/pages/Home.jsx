@@ -24,7 +24,7 @@ const Login = () => {
     e.preventDefault();
 
     const config = {
-      header: {
+      headers: {
         "Content-Type": "application/json",
       },
     };

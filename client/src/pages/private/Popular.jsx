@@ -115,7 +115,7 @@ const Popular = () => {
 
   return (
     <>
-      <div className="w-full bg-popular">
+      <div className="w-full zzbg-popular bg-main">
         <SearchBar setMovies={setMovies} fetchMovies={fetchMovies} />
         {movies.length > 0 ? (
           <div className="mx-4">

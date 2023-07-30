@@ -1,18 +1,15 @@
 import React from "react";
 import ProfileSVG from "assets/img/profile.svg.js";
-import { useNavigate } from "react-router-dom";
 
 const LoginButton = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="">
-      <button
+      <a
         className="hover:bg-gray-200 inline-flex py-2 text-xl cursor-pointer border-2 rounded-xl border-gray-800 pl-2"
-        onClick={() => navigate("/account")}
+        href="/account"
       >
         <ProfileSVG />
-      </button>
+      </a>
     </div>
   );
 };
