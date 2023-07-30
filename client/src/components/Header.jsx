@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import ProfileSVG from "assets/img/profile.svg.js";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "UserContext";
+import { Button } from "components/Button";
 
 const Profile = () => {
   return (
@@ -28,41 +29,33 @@ const Logout = () => {
   if (!user) return null;
 
   return (
-    <div className="flex justify-start lg:w-0 flex-1">
-      <button onClick={handleLogout} className="flex gap-x-4 items-center">
-        <li
-          className={
-            "flex  rounded-md p-2 cursor-pointer text-sm items-center gap-x-4 mt-9"
-          }
-        >
-          <span className="origin-left duration-200">Se déconnecter</span>
-        </li>
-      </button>
-    </div>
+    <Button color="inherit" onClick={handleLogout}>
+      Se déconnecter
+    </Button>
   );
 };
 
 const Browse = () => {
   return (
-    <nav className="flex md:space-x-10">
-      <a href="/account/movies">Voir les films du moment</a>
-    </nav>
+    <a href="/account/movies">
+      <Button color="inherit">Voir les films du moment</Button>
+    </a>
   );
 };
 
 const Header = () => {
   return (
-    <div className="py-3 z-50 w-full h-1/6 bg-gradient-to-r from-main to-white text-white">
-      <div className="mx-auto sm:px-6">
-        <div className="hidden sm:flex justify-between items-center md:justify-start md:space-x-10">
-          <Logout />
-          <Browse />
-          <div className="flex items-center justify-end flex-1 lg:w-0">
-            <Profile />
-          </div>
-        </div>
+    <header className="bg-gradient-to-r from-secondary to-white p-4 text-white flex justify-between items-center px-8">
+      <div>
+        <Logout />
       </div>
-    </div>
+      <div>
+        <Browse />
+      </div>
+      <div>
+        <Profile />
+      </div>
+    </header>
   );
 };
 
