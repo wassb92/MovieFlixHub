@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { InputAdornment, IconButton } from "@mui/material";
+import { InputAdornment, IconButton, Autocomplete } from "@mui/material";
 
 const Input = ({
-  header,
   type,
   placeholder,
   name,
@@ -29,6 +28,7 @@ const Input = ({
         required={required ?? false}
         value={value}
         onChange={onChange}
+        InputLabelProps={{ shrink: true }}
         InputProps={{
           endAdornment: type === "password" && (
             <InputAdornment position="end">
@@ -49,4 +49,20 @@ const Input = ({
   );
 };
 
-export { Input };
+const AutoComplete = ({ options, value, setValue }) => {
+  return (
+    <Autocomplete
+      disablePortal
+      id="combo-box-demo"
+      options={options}
+      sx={{ width: 300 }}
+      renderInput={(params) => <TextField {...params} name="Genre préféré" />}
+      value={value}
+      onChange={(event, newValue) => {
+        setValue(newValue);
+      }}
+    />
+  );
+};
+
+export { Input, AutoComplete };

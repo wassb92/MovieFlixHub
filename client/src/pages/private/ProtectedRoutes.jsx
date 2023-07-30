@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Outlet } from "react-router";
+import { UserContext } from "UserContext";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Unauthenticated from "pages/Unauthenticated";
 
 const LoadingToRedirect = () => {
-  return (
-    <div className="container p-5 text-center">
-      <h4>Loading...</h4>
-    </div>
-  );
+  const [count, setCount] = useState(20);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount((currentCount) => --currentCount);
+    }, 1000);
+    if (count === 0) navigate("/");
+
+    return () => clearInterval(interval);
+  }, [count]);
+
+  return <Unauthenticated count={count} />;
 };
 
-/*
 const useAuth = () => {
   const [user, setUser] = useState(null);
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
@@ -29,7 +40,7 @@ const useAuth = () => {
         loadingGetUser.current = false;
 
         const { data } = await axios.get(
-          `${global.API}/api/private/account`,
+          `${global.API_ENDPOINT}/api/private/account`,
           config
         );
         setUser(data.user);
@@ -45,12 +56,17 @@ const useAuth = () => {
 
   return value;
 };
-*/
 
 const ProtectedRoutes = () => {
-  const isAuth = true;
+  const isAuth = useAuth();
 
-  return isAuth ? <Outlet /> : <LoadingToRedirect />;
+  return isAuth ? (
+    <UserContext.Provider value={isAuth}>
+      <Outlet />
+    </UserContext.Provider>
+  ) : (
+    <LoadingToRedirect />
+  );
 };
 
 export default ProtectedRoutes;

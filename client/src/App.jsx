@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 /* private */
 import ProtectedRoutes from "./pages/private/ProtectedRoutes";
+import Account from "./pages/private/Account";
 import Popular from "./pages/private/Popular";
 
 const Layout = () => {
@@ -29,7 +30,7 @@ const App = () => {
           element={
             <Routes>
               <Route element={<Layout />}>
-                <Route path="/profile" element={<div>Profile page</div>} />
+                <Route path="/" element={<Account />} />
                 <Route path="/movies" element={<Popular />} />
               </Route>
               <Route path="*" element={<NotFound />} />

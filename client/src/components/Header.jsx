@@ -8,11 +8,10 @@ const LoginButton = () => {
   return (
     <div className="">
       <button
-        className="hover:bg-gray-200 inline-flex py-2 text-xl cursor-pointer border-2 rounded-xl px-4 md:px-2 lg:pr-4 xs:pr-2 border-gray-800"
+        className="hover:bg-gray-200 inline-flex py-2 text-xl cursor-pointer border-2 rounded-xl border-gray-800 pl-2"
         onClick={() => navigate("/account")}
       >
         <ProfileSVG />
-        <div className="hidden md:flex md:pr-2">Se connecter</div>
       </button>
     </div>
   );
