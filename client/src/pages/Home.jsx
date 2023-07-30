@@ -161,14 +161,21 @@ const Login = () => {
 const Home = () => {
   return (
     <div
-      className="bg-cover bg-no-repeat bg-center h-screen"
+      className="bg-cover bg-no-repeat bg-center h-screen flex flex-col justify-center items-center"
       style={{ backgroundImage: "url('https://rb.gy/p2hphi')" }}
     >
-      {/* <img
-        src="https://rb.gy/ulxxee"
-        alt="Netflix Logo"
-        className="w-24 h-auto"
-      /> */}
+      <div className="text-center text-white font-bold text-3xl bg-whited p-4 rounded-lg mb-6 top-40 relative">
+        <div>
+          NeoMovie est la solution pour trouver le film parfait pour vous !
+        </div>
+        <div>
+          Créez votre compte et commencez à ajouter des films à vos playlists
+        </div>
+        <div>
+          Vous pouvez également voir les films du moment, les ajouter à vos
+          préférences, marquer des films comme déjà vus, et bien plus encore !
+        </div>
+      </div>
       <div className="flex justify-center items-center h-full">
         <Login />
       </div>
