@@ -27,6 +27,26 @@ const LoopSVG = ({ className }) => {
   );
 };
 
+const ReversedLoopSVG = ({ className }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={className ? className : "text-red-600 w-1/3 h-1/3"}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        transform="rotate(90, 12, 12)"
+        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+      />
+    </svg>
+  );
+};
+
 const SearchBar = ({ setMovies, fetchMovies }) => {
   const [query, setQuery] = useState("");
   const searchHandler = async (e) => {
@@ -255,18 +275,31 @@ const Popular = () => {
 
   if (!movies) return <h1>Loading...</h1>;
 
+  const NoResult = () => {
+    return (
+      <div>
+        <div className="w-full p-4 bg-gradient-to-b from-main to-white flex justify-center items-center space-x-4">
+          <ReversedLoopSVG />
+        </div>
+        <div className="text-black bg-white flex justify-center items-center space-x-4">
+          <p className="text-2xl">Aucun résultat trouvé, essayez autre chose</p>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
-      <div className="w-full zzbg-popular bg-secondary">
+      <div className="w-full bg-secondary">
         <SearchBar setMovies={setMovies} fetchMovies={fetchMovies} />
-        <div className="w-full p-4 bg-main flex justify-center items-center space-x-4 mb-4 text-white">
+        <div className="w-full p-4 bg-main flex justify-center items-center space-x-4 text-white">
           <Filter onFilterChange={handleFilterChange} />
           <div onClick={handleSearch}>
             <LoopSVG className="flex justify-center items-center cursor-pointer w-6 h-6 my-auto text-white mt-6 hover:scale-150" />
           </div>
         </div>
         {movies.length > 0 ? (
-          <div className="mx-4">
+          <div className="mx-4 mt-4">
             <div className="grid grid-cols-4 gap-4 justify-items-center">
               {movies.map(
                 (movieReq) =>
@@ -284,7 +317,7 @@ const Popular = () => {
             </div>
           </div>
         ) : (
-          <h2>Aucun résultat trouvé</h2>
+          <NoResult />
         )}
       </div>
     </>

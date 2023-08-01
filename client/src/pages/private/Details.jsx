@@ -1,12 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import {
-  ThumbUpAlt,
-  LiveTv,
-  Done,
-  ControlPoint,
-  AddBox,
-} from "@mui/icons-material";
+import { ThumbUpAlt, LiveTv, ControlPoint, AddBox } from "@mui/icons-material";
 import { UserContext } from "UserContext";
 import { Button } from "components/Button";
 import { AutoComplete } from "components/Input";
@@ -235,7 +229,6 @@ const Details = ({
           { movieId: id, title, poster_path },
           config
         );
-        console.log("data", data);
       } catch (error) {
         console.log(error);
       }
@@ -245,7 +238,7 @@ const Details = ({
       <div className="cursor-pointer">
         <ThumbUpAlt
           onClick={handleLike}
-          color={like ? "error" : ""}
+          style={{ color: like ? "red" : "white" }}
           fontSize="large"
         />
       </div>
@@ -295,24 +288,13 @@ const Details = ({
     };
 
     return (
-      <div
-        className="cursor-pointer z-1"
-        onClick={handleAlreadySeen}
-        style={{
-          position: "relative",
-        }}
-      >
-        <LiveTv fontSize="large" />
-        {movieAlreadySeen && (
-          <Done
-            color="success"
-            style={{
-              position: "absolute",
-              top: "-4",
-              right: "-10",
-            }}
-          />
-        )}
+      <div className="cursor-pointer z-1" onClick={handleAlreadySeen}>
+        <LiveTv
+          fontSize="large"
+          style={{
+            color: movieAlreadySeen ? "green" : "white",
+          }}
+        />
       </div>
     );
   };
