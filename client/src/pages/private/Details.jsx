@@ -30,7 +30,7 @@ const AddMovieInPlaylistModal = ({
   const { user } = useContext(UserContext);
   const { playlists } = user;
   const [playlistSelected, setPlaylistSelected] = useState(
-    (playlists && playlists[0].name) || ""
+    (playlists && playlists[0]?.name) || ""
   );
 
   const handleSubmit = async (e) => {
@@ -68,22 +68,33 @@ const AddMovieInPlaylistModal = ({
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 text-center">
       <div className="bg-gray-100 rounded w-1/3 p-4 space-y-4">
-        <div>
-          <h2 className="text-4xl my-4">Ajouter à une playlist</h2>
-        </div>
-        <div className="flex items-center justify-center space-y-2">
-          <AutoComplete
-            options={playlists.map((playlist) => playlist.name)}
-            value={playlistSelected}
-            setValue={setPlaylistSelected}
-          />
-          <AddBox
-            onClick={handleSubmit}
-            color="success"
-            className="cursor-pointer"
-            style={{ fontSize: "3.5rem", marginBottom: "0.7rem" }}
-          />
-        </div>
+        {playlists.length === 0 ? (
+          <>
+            <div className="text-xl">Vous n'avez pas de playlist</div>
+            <div className="text-gray-500">
+              Vous pouvez en créer une en allant sur votre profil
+            </div>
+          </>
+        ) : (
+          <>
+            <div>
+              <h2 className="text-4xl my-4">Ajouter à une playlist</h2>
+            </div>
+            <div className="flex items-center justify-center space-y-2">
+              <AutoComplete
+                options={playlists.map((playlist) => playlist.name)}
+                value={playlistSelected}
+                setValue={setPlaylistSelected}
+              />
+              <AddBox
+                onClick={handleSubmit}
+                color="success"
+                className="cursor-pointer"
+                style={{ fontSize: "3.5rem", marginBottom: "0.7rem" }}
+              />
+            </div>
+          </>
+        )}
 
         <div>
           <Button onClick={() => setShowAddPlaylist(false)}>Fermer</Button>
