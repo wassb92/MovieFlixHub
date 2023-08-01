@@ -6,7 +6,7 @@ import { UserContext } from "UserContext";
 
 global.API_KEY = "55bb5aeea2538b26cf848582959d4fc8";
 global.TMDB_API = "https://api.themoviedb.org/3";
-global.API_ENDPOINT = "http://localhost:8080";
+global.API_ENDPOINT = "https://myallocine-neomovie.onrender.com";
 
 const LoopSVG = ({ className }) => {
   return (
