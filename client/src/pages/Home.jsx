@@ -49,9 +49,13 @@ const Login = () => {
       setError(!isFirstAuth && error?.response?.data?.error);
       setIsFirstLogin(isFirstAuth);
       if (isFirstAuth) {
+        console.log(
+          "url = ",
+          `${global.TMDB_API}/genre/movie/list?api_key=${global.API_KEY}&language=fr`
+        );
         try {
           const { data } = await axios.get(
-            "https://api.themoviedb.org/3/genre/movie/list?api_key=55bb5aeea2538b26cf848582959d4fc8&language=fr-FR",
+            `${global.TMDB_API}/genre/movie/list?api_key=${global.API_KEY}&language=fr`,
             config
           );
           setOptions(data.genres);
