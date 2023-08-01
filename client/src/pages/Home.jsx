@@ -5,6 +5,7 @@ import { AutoComplete, Input } from "components/Input";
 import { DisplayError } from "components/DisplayNotice";
 import { Button } from "components/Button";
 import { Checkbox, FormGroup, FormControlLabel } from "@mui/material";
+import { LoadingIcon } from "components/Loading";
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -17,10 +18,12 @@ const Login = () => {
   const [isFirstLogin, setIsFirstLogin] = useState(false);
   const [options, setOptions] = useState([]);
   const [favoriteGenre, setFavoriteGenre] = useState("");
+  const [loadingIcon, setLoadingIcon] = useState(false);
 
   const navigate = useNavigate();
 
   const loginHandler = async (e) => {
+    setLoadingIcon(true);
     e.preventDefault();
 
     const config = {
@@ -47,6 +50,7 @@ const Login = () => {
     } catch (error) {
       const isFirstAuth = error?.response?.data?.firstAuth;
       setError(!isFirstAuth && error?.response?.data?.error);
+      setLoadingIcon(false);
       setIsFirstLogin(isFirstAuth);
       if (isFirstAuth) {
         console.log(
@@ -77,7 +81,11 @@ const Login = () => {
   return (
     <div className="from-main to-secondary">
       <div className="flex justify-center items-center">
-        <div className="md:px-10 md:pt-10 px-2 pt-2 bg-white rounded-xl drop-shadow-lg space-y-5 pb-8">
+        <div
+          className={`md:px-10 md:pt-10 px-2 pt-2 bg-white rounded-xl drop-shadow-lg space-y-5 pb-8 shadow-2xl ${
+            loadingIcon ? "blur-sm" : "blur-none"
+          }`}
+        >
           <h1 className="text-center md:text-3xl text-xl">Se connecter</h1>
           <div className="flex flex-col space-y-2">
             <Input
@@ -122,10 +130,15 @@ const Login = () => {
             <Button type="submit" children="Connexion" onClick={loginHandler} />
           </div>
         </div>
+        <LoadingIcon loadingIcon={loadingIcon} />
       </div>
       {isFirstLogin && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="px-20 py-6 bg-white rounded-md shadow-xl">
+          <div
+            className={`px-20 py-6 bg-white rounded-md shadow-xl ${
+              loadingIcon ? "blur-sm" : "blur-none"
+            }`}
+          >
             <div className="flex flex-col items-center">
               <div className="font-bold text-main text-6xl">
                 Hop hop hop, il semblerait que tu sois nouveau !
@@ -156,6 +169,7 @@ const Login = () => {
               />
             </div>
           </div>
+          <LoadingIcon loadingIcon={loadingIcon} />
         </div>
       )}
     </div>
