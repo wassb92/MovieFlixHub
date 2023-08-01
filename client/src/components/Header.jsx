@@ -8,7 +8,7 @@ const Profile = () => {
   return (
     <div className="">
       <a
-        className="hover:bg-gray-200 inline-flex py-2 text-xl cursor-pointer border-2 rounded-xl border-gray-800 pl-2"
+        className="hover:bg-main inline-flex py-2 text-xl cursor-pointer border-2 rounded-xl border-white pl-2"
         href="/account"
       >
         <ProfileSVG />
@@ -50,16 +50,10 @@ const Browse = () => {
 
 const Header = () => {
   return (
-    <header className="bg-gradient-to-r from-secondary to-white p-4 text-white flex justify-between items-center px-8">
-      <div>
-        <Logout />
-      </div>
-      <div>
-        <Browse />
-      </div>
-      <div>
-        <Profile />
-      </div>
+    <header className="flex justify-between items-center p-4 bg-blue-600">
+      <Logout />
+      <Browse />
+      <Profile />
     </header>
   );
 };

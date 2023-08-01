@@ -248,7 +248,7 @@ const Details = ({
       <div className="cursor-pointer">
         <ThumbUpAlt
           onClick={handleLike}
-          style={{ color: like ? "red" : "white" }}
+          style={{ color: like ? "red" : "black" }}
           fontSize="large"
         />
       </div>
@@ -260,7 +260,7 @@ const Details = ({
       <div className="my-4">
         <button
           type="button"
-          className="bg-white text-gray-900 py-2 px-4 rounded"
+          className="bg-black text-white py-2 px-4 rounded"
           onClick={handleShow}
         >
           Voir plus
@@ -302,7 +302,7 @@ const Details = ({
         <LiveTv
           fontSize="large"
           style={{
-            color: movieAlreadySeen ? "green" : "white",
+            color: movieAlreadySeen ? "green" : "black",
           }}
         />
       </div>

@@ -7,9 +7,9 @@ module.exports = {
         popular: "url('./image.jpg')",
       },
       colors: {
-        main: "#1F2937",
-        secondary: "#4B5563",
-        soft: "#9333ea",
+        main: "#1E40AF",
+        secondary: "#2590EB",
+        soft: "#3A3A3A",
       },
     },
   },

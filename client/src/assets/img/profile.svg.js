@@ -3,7 +3,7 @@ import React from "react";
 const ProfileSVG = () => {
   return (
     <svg
-      className="mr-2 w-7 h-7 text-gray-600 group-hover:text-gray-600 dark:text-gray-600 dark:group-hover:text-gray-600"
+      className="mr-2 w-7 h-7 text-white group-hover:text-white dark:text-white dark:group-hover:text-white"
       fill="currentColor"
       viewBox="0 0 20 20"
       xmlns="http://www.w3.org/2000/svg"
