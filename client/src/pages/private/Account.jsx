@@ -88,6 +88,9 @@ const Account = () => {
 
   return (
     <div className="space-y-4">
+      <div className="text-xl ml-4 text-gray-700">
+        Connecté(e) avec {user.email}
+      </div>
       <div className="flex flex-col items-center mt-8">
         <CreatePlaylist />
       </div>

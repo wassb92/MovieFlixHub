@@ -29,7 +29,10 @@ const Logout = () => {
   if (!user) return null;
 
   return (
-    <Button color="inherit" onClick={handleLogout}>
+    <Button
+      onClick={handleLogout}
+      className="md:px-10 md:py-2 px-1 py-1 bg-main text-white rounded-md hover:bg-secondary hover:drop-shadow-md duration-200 ease-in"
+    >
       Se déconnecter
     </Button>
   );
@@ -38,7 +41,9 @@ const Logout = () => {
 const Browse = () => {
   return (
     <a href="/account/movies">
-      <Button color="inherit">Voir les films du moment</Button>
+      <Button className="md:px-10 md:py-2 px-4 py-1 bg-main text-white rounded-md hover:bg-secondary hover:drop-shadow-md duration-200 ease-in">
+        Voir les films du moment
+      </Button>
     </a>
   );
 };

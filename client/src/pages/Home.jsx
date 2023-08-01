@@ -73,8 +73,8 @@ const Login = () => {
   return (
     <div className="from-main to-secondary">
       <div className="flex justify-center items-center">
-        <div className="px-10 pt-10 bg-white rounded-xl drop-shadow-lg space-y-5 pb-8">
-          <h1 className="text-center text-3xl">Se connecter</h1>
+        <div className="md:px-10 md:pt-10 px-2 pt-2 bg-white rounded-xl drop-shadow-lg space-y-5 pb-8">
+          <h1 className="text-center md:text-3xl text-xl">Se connecter</h1>
           <div className="flex flex-col space-y-2">
             <Input
               type="email"

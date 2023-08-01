@@ -66,7 +66,7 @@ const SearchBar = ({ setMovies, fetchMovies }) => {
   };
 
   return (
-    <form className="w-full p-4 bg-main">
+    <form className="w-full p-4 bg-gradient-to-r from-secondary to-white">
       <div className="relative">
         <LoopSVG className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3" />
         <input
@@ -124,8 +124,10 @@ const Filter = ({ onFilterChange }) => {
 
   return (
     <div className="flex space-x-4 text-center">
-      <div>
-        <label htmlFor="year">Année de sortie</label>
+      <div className="w-full md:w-auto">
+        <label htmlFor="year" className="hidden md:block">
+          Année de sortie
+        </label>
         <select
           name="year"
           id="year"
@@ -144,8 +146,10 @@ const Filter = ({ onFilterChange }) => {
         </select>
       </div>
 
-      <div>
-        <label htmlFor="genre">Genre</label>
+      <div className="w-full md:w-auto">
+        <label htmlFor="genre" className="hidden md:block">
+          Genre
+        </label>
         <select
           name="genre"
           id="genre"
@@ -164,8 +168,10 @@ const Filter = ({ onFilterChange }) => {
         </select>
       </div>
 
-      <div>
-        <label htmlFor="language">Langue</label>
+      <div className="w-full md:w-auto">
+        <label htmlFor="language" className="hidden md:block">
+          Langue
+        </label>
         <select
           name="language"
           id="language"
@@ -292,7 +298,7 @@ const Popular = () => {
     <>
       <div className="w-full bg-secondary">
         <SearchBar setMovies={setMovies} fetchMovies={fetchMovies} />
-        <div className="w-full p-4 bg-main flex justify-center items-center space-x-4 text-white">
+        <div className="w-full p-4 bg-gradient-to-r from-secondary to-white flex justify-center items-center space-x-4 text-white">
           <Filter onFilterChange={handleFilterChange} />
           <div onClick={handleSearch}>
             <LoopSVG className="flex justify-center items-center cursor-pointer w-6 h-6 my-auto text-white mt-6 hover:scale-150" />

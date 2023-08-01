@@ -9,12 +9,10 @@ const API_IMG = "https://image.tmdb.org/t/p/w500/";
 
 const Video = ({ videos }) => {
   const index = Math.floor(Math.random() * videos.length);
-  console.log("index", index);
   return (
     <div className="flex flex-col items-center justify-center">
       <iframe
-        width="560"
-        height="315"
+        className="w-full h-96"
         src={`https://www.youtube.com/embed/${videos[index].key}`}
         title="YouTube video player"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -62,7 +60,6 @@ const AddMovieInPlaylistModal = ({
         body,
         config
       );
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -113,7 +110,7 @@ const MovieModal = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 text-center z-100">
-      <div className="bg-gray-100 rounded w-1/3 p-4">
+      <div className="bg-gray-100 rounded md:w-1/2 w-full p-4">
         <div className="flex justify-end">
           <ControlPoint
             onClick={() => setShowAddPlaylist(!showAddPlaylist)}
@@ -160,7 +157,9 @@ const MovieModal = ({
             <div>Aucune vidéo disponible pour le moment</div>
           )}
           <h2 className="text-2xl my-4">Résumé</h2>
-          <p>{overview}</p>
+          <div className="m-4">
+            <p className="overflow-y-auto h-36 text-center">{overview}</p>
+          </div>
         </div>
         <div>
           <button
@@ -306,12 +305,16 @@ const Details = ({
   return (
     <>
       <div className="my-3">
-        <img className="mx-auto rounded-lg" src={API_IMG + poster_path} />
-        <div className="flex justify-around items-center">
+        <img
+          className="mx-auto rounded-lg cursor-pointer"
+          src={API_IMG + poster_path}
+          onClick={handleShow}
+        />
+        <div className="flex justify-around items-center md:mt-0 mt-2">
           <div>
             <Like id={id} title={title} poster_path={poster_path} />
           </div>
-          <div>
+          <div className="hidden md:block">
             <ShowMore />
           </div>
           <div className="flex justify-around items-center gap-x-4">
