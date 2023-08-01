@@ -142,7 +142,7 @@ const Filter = ({ onFilterChange, handleSearch }) => {
         >
           {languages.map((language) => (
             <option
-              key={language.id}
+              key={language.iso_639_1}
               value={language.iso_639_1}
               onChange={handleFilterChange}
             >
@@ -269,13 +269,11 @@ const Popular = () => {
             (movieReq) =>
               movieReq.id &&
               movieReq.poster_path && (
-                <>
-                  <Details
-                    key={movieReq.id}
-                    {...movieReq}
-                    genres={ConvertGenres(movieReq.genre_ids)}
-                  />
-                </>
+                <Details
+                  key={movieReq.id}
+                  {...movieReq}
+                  genres={ConvertGenres(movieReq.genre_ids)}
+                />
               )
           )}
         </div>

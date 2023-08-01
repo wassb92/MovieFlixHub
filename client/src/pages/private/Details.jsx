@@ -134,7 +134,10 @@ const MovieModal = ({
           <div className="flex flex-row justify-center">
             {genres &&
               genres.map((genre) => (
-                <div className="bg-gray-800 text-white rounded-full px-3 mx-1 mb-4">
+                <div
+                  key={genre}
+                  className="bg-gray-800 text-white rounded-full px-3 mx-1 mb-4"
+                >
                   {genre}
                 </div>
               ))}
@@ -198,20 +201,28 @@ const Details = ({
   const [show, setShow] = useState(false);
   const [video, setVideo] = useState();
 
-  const fetchVideo = async () => {
-    const url = `${global.TMDB_API}/movie/${id}/videos?api_key=${global.API_KEY}&include_video_language=fr`;
-
-    try {
-      const res = await axios.get(url);
-      const data = await res.data.results;
-      setVideo(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   useEffect(() => {
+    let isMounted = true;
+
+    const fetchVideo = async () => {
+      const url = `${global.TMDB_API}/movie/${id}/videos?api_key=${global.API_KEY}&include_video_language=fr`;
+
+      try {
+        const res = await axios.get(url);
+        const data = await res.data.results;
+        if (isMounted) {
+          setVideo(data);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
     fetchVideo();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleShow = () => setShow(true);
