@@ -166,9 +166,16 @@ const Home = () => {
   return (
     <div
       className="bg-cover bg-no-repeat bg-center h-screen flex flex-col justify-center items-center"
-      style={{ backgroundImage: "url('https://rb.gy/p2hphi')" }}
+      style={{
+        backgroundImage: "url('https://rb.gy/p2hphi')",
+      }}
     >
-      <div className="text-center text-white font-bold text-3xl bg-whited p-4 rounded-lg mb-6 top-40 relative">
+      <div
+        className="w-full text-center text-white font-bold text-3xl bg-whited p-4 mb-6 top-40 relative bg-gradient-to-r from-transparent via-black to-transparent"
+        style={{
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+        }}
+      >
         <div>
           NeoMovie est la solution pour trouver le film parfait pour vous !
         </div>
