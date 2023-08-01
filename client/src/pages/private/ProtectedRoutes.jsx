@@ -25,6 +25,7 @@ const useAuth = () => {
   const [user, setUser] = useState(null);
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
   const loadingGetUser = React.useRef(true);
+  const [statusCode, setStatusCode] = useState(null);
 
   useEffect(() => {
     const fetchPrivateAccount = async () => {
@@ -39,12 +40,14 @@ const useAuth = () => {
         if (!localStorage.getItem("authToken")) return;
         loadingGetUser.current = false;
 
-        const { data } = await axios.get(
+        const res = await axios.get(
           `${global.API_ENDPOINT}/api/private/account`,
           config
         );
-        setUser(data.user);
+        setUser(res.data.user);
+        setStatusCode(res.status);
       } catch (error) {
+        setStatusCode(error.response.status);
         localStorage.removeItem("authToken");
       }
     };
@@ -52,6 +55,7 @@ const useAuth = () => {
     fetchPrivateAccount();
   }, []);
 
+  if (statusCode === 401) return statusCode;
   if (loadingGetUser.current) return null;
 
   return value;
@@ -59,6 +63,11 @@ const useAuth = () => {
 
 const ProtectedRoutes = () => {
   const isAuth = useAuth();
+  const hasToken = isAuth === 401 ? false : true;
+
+  if (hasToken === false) return <LoadingToRedirect />;
+
+  if (isAuth === null) return null;
 
   return isAuth ? (
     <UserContext.Provider value={isAuth}>
