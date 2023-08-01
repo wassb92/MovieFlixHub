@@ -55,7 +55,10 @@ const useAuth = () => {
     fetchPrivateAccount();
   }, []);
 
-  if (statusCode === 401) return statusCode;
+  if (statusCode === 401) {
+    localStorage.removeItem("authToken");
+    return statusCode;
+  }
   if (loadingGetUser.current) return null;
 
   return value;
@@ -63,7 +66,8 @@ const useAuth = () => {
 
 const ProtectedRoutes = () => {
   const isAuth = useAuth();
-  const hasToken = isAuth === 401 ? false : true;
+  const hasToken =
+    isAuth === 401 || localStorage.getItem("authToken") === null ? false : true;
 
   if (hasToken === false) return <LoadingToRedirect />;
 
