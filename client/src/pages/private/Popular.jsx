@@ -248,12 +248,12 @@ const Popular = () => {
 
   const NoResult = () => {
     return (
-      <div>
-        <div className="w-full p-4 bg-gradient-to-b from-main to-white flex justify-center items-center space-x-4">
+      <div className="flex flex-col justify-center">
+        <div className="flex justify-center items-center p-4 rounded-full text-white">
           <ReversedLoopSVG />
         </div>
-        <div className="text-black bg-white flex justify-center items-center space-x-4">
-          <p className="text-2xl">Aucun résultat trouvé, essayez autre chose</p>
+        <div className="text-black bg-white px-4 py-2 mt-4 rounded-lg shadow-md flex justify-center items-center mx-auto">
+          <p className="text-2xl font-bold">Aucun résultat trouvé</p>
         </div>
       </div>
     );
